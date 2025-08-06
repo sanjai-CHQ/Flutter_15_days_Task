@@ -52,6 +52,7 @@ class MainScreen extends StatelessWidget {
   }
 }
 
+//Stateless Widget Examples
 class StatelessWidgetExamples extends StatelessWidget {
   const StatelessWidgetExamples({super.key});
 
@@ -326,16 +327,165 @@ class StatelessButton extends StatelessWidget {
   }
 }
 
-class StatefullWidgetExamples extends StatefulWidget {
+
+//Statefull  Widget Examples
+class StatefullWidgetExamples extends StatelessWidget {
   const StatefullWidgetExamples({super.key});
 
   @override
-  State<StatefullWidgetExamples> createState() => _StatefullWidgetExamplesState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Stateful Widget Examples')),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Statefull Widget Examples:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              SizedBox(height: 20,),
+
+              CounterWidget(),
+              SizedBox(height: 20,),
+
+              ToggleSwitchWidget(),
+              SizedBox(height: 20),
+
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _StatefullWidgetExamplesState extends State<StatefullWidgetExamples> {
+class CounterWidget extends StatefulWidget {
+  const CounterWidget({super.key});
+
+  @override
+  State<CounterWidget> createState() => _CounterWidgetState();
+}
+
+class _CounterWidgetState extends State<CounterWidget> {
+  int _counter = 0;
+
+  @override
+  void initState(){
+    super.initState();
+    print('CounterWidget initialized');
+  }
+
+  @override
+  void dispose(){
+    print('CounterWidget disposed');
+    super.dispose();
+  }
+
+  void _incrementCounter(){
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter(){
+    setState(() {
+      _counter--;
+    });
+  }
+
+  void _resetCounter(){
+    setState(() {
+      _counter=0;
+    },);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Card(
+      child: Padding(
+        padding:EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text('Counter Example', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+            SizedBox(height: 10,),
+            Text('Counter: $_counter', style: TextStyle(fontSize: 24),),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: _decrementCounter,
+                  child: Text('-'),
+                  ),
+
+                ElevatedButton(
+                  onPressed: _resetCounter,
+                  child: Text('Reset'),
+                  ),
+
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  child: Text('+'),
+                  ),
+
+              ],
+            )
+          ],
+        ),
+        ),
+    );
+  }
+}
+
+class ToggleSwitchWidget extends StatefulWidget {
+  const ToggleSwitchWidget({super.key});
+
+  @override
+  State<ToggleSwitchWidget> createState() => _ToggleSwitchWidgetState();
+}
+
+class _ToggleSwitchWidgetState extends State<ToggleSwitchWidget> {
+  bool _isToggled = false;
+  String _toggledText = 'OFF';
+
+  void _toogleSwitch() {
+    setState(() {
+      _isToggled = !_isToggled;
+      _toggledText = _isToggled ? 'ON' : 'OFF';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text('Toggle Switch Example', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Status: $_toggledText', style: TextStyle(fontSize: 16),),
+                SizedBox(width: 20,),
+                Switch(
+                  value: _isToggled,
+                  onChanged: (value){
+                    setState(() {
+                      _isToggled = value;
+                      _toggledText = value ? 'ON' : 'OFF';
+                    });
+                  }
+                  )
+              ],
+            ),
+            SizedBox(height: 10,),
+            ElevatedButton(
+              onPressed: _toogleSwitch,
+              child: Text('Toggle')),
+          ],
+        ),
+      ),
+    );
   }
 }

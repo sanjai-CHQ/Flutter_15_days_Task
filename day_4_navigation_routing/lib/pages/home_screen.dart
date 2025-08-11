@@ -1,6 +1,7 @@
 import 'package:day_4_navigation_routing/pages/profile_screen.dart';
 import 'package:day_4_navigation_routing/pages/second_screen.dart';
 import 'package:day_4_navigation_routing/utils/custom_routes.dart';
+import 'package:day_4_navigation_routing/widgets/app_drawer.dart';
 import'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
         title: Text('Home Screen'),
         backgroundColor: Colors.blue,
       ),
-//      drawer: AppDrawer(),
+      drawer: AppDrawer(),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -58,8 +59,21 @@ class HomeScreen extends StatelessWidget {
                     );
                   }, child: Text('User Profile (With Args)'),
                   ),
+                  SizedBox(height: 15,),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/tabs');
+                    },
+                    child: Text('Go to Tabs Screen'))
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){ Navigator.pushNamed(context, '/settings');
+        },
+        child: Icon(Icons.settings),
+        tooltip: 'Settings',
       ),
     );
   }

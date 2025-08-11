@@ -2,6 +2,8 @@ import 'package:day_4_navigation_routing/pages/home_screen.dart';
 import 'package:day_4_navigation_routing/pages/not_found_screen.dart';
 import 'package:day_4_navigation_routing/pages/profile_screen.dart';
 import 'package:day_4_navigation_routing/pages/second_screen.dart';
+import 'package:day_4_navigation_routing/pages/settings_screen.dart';
+import 'package:day_4_navigation_routing/pages/tabs_screen.dart';
 import 'package:day_4_navigation_routing/pages/third_screen.dart';
 import 'package:day_4_navigation_routing/pages/user_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +28,8 @@ class MyApp extends StatelessWidget {
         '/second': (context) => SecondScreen(),
         '/third': (context) => ThirdScreen(),
         '/profile': (context) => ProfileScreen(),
-    //    '/settings': (context) => SettingsScreen(),
-      //  '/tabs': (context) => TabsScreen(),
+        '/settings': (context) => SettingsScreen(),
+        '/tabs': (context) => TabsScreen(),
       },
 
       onUnknownRoute: (settings){

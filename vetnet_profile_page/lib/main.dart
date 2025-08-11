@@ -1,10 +1,14 @@
+
+
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,19 +36,20 @@ class _VetnetProfilePageState extends State<VetnetProfilePage>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
-  // Professional Color Scheme
+  // Elegant Professional Color Scheme - Minimal Palette
   static const Color primaryColor = Color(0xFF2563EB); // Professional Blue
+  static const Color primaryDark = Color(0xFF1D4ED8); // Darker Blue for depth
   static const Color secondaryColor = Color(0xFF1E40AF); // Darker Blue
-  static const Color accentColor = Color(0xFF059669); // Professional Green
-  static const Color successColor = Color(0xFF059669); // Green
+  static const Color successColor = Color(0xFF10B981); // Green for success states only
   static const Color warningColor = Color(0xFFD97706); // Orange
-  static const Color errorColor = Color(0xFFDC2626); // Red
-  static const Color surfaceColor = Color(0xFFF9FAFB); // Light Gray
-  static const Color cardColor = Color(0xFFFFFFFF);
-  static const Color textPrimary = Color(0xFF111827);
-  static const Color textSecondary = Color(0xFF6B7280);
-  static const Color dividerColor = Color(0xFFE5E7EB);
-  static const Color coverColor = Color(0xFFE5E7EB); // Light gray for cover
+  static const Color accentColor = Color(0xFF059669); // Professional Green
+  static const Color surfaceColor = Color(0xFFFAFAFA); // Very light gray background
+  static const Color cardColor = Color(0xFFFFFFFF); // Pure white
+  static const Color textPrimary = Color(0xFF1F2937); // Dark gray for primary text
+  static const Color textSecondary = Color(0xFF6B7280); // Medium gray for secondary text
+  static const Color textLight = Color(0xFF9CA3AF); // Light gray for subtle text
+  static const Color dividerColor = Color(0xFFE5E7EB); // Light gray for dividers
+  static const Color borderColor = Color(0xFFD1D5DB); // Border color
 
   @override
   void initState() {
@@ -69,134 +74,174 @@ class _VetnetProfilePageState extends State<VetnetProfilePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: surfaceColor,
-      body: Stack(
-        children: [
-          // Simple Cover Section
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              color: coverColor,
-            ),
-            child: Center(
-              child: Icon(
-                Icons.camera_alt_outlined,
-                size: 48,
-                color: textSecondary.withOpacity(0.5),
-              ),
-            ),
-          ),
-          // Control Buttons
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 10,
-            right: 20,
-            child: _buildControlButton(
-              icon: Icons.camera_alt_rounded,
-              text: 'Edit Cover',
-              onTap: () {},
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top + 10,
-            left: 20,
-            child: _buildControlButton(
-              icon: Icons.arrow_back_ios_rounded,
-              onTap: () => Navigator.pop(context),
-              isBackButton: true,
-            ),
-          ),
-          // Main Content
-          FadeTransition(
-            opacity: _fadeAnimation,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(height: 140),
-                  _buildProfileSection(),
-                  SizedBox(height: 20),
-                  _buildTabContent(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildControlButton({
-    required IconData icon,
-    String? text,
-    required VoidCallback onTap,
-    bool isBackButton = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: text != null ? 12 : 10,
-          vertical: 8,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 8,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: textPrimary,
-              size: isBackButton ? 18 : 16,
-            ),
-            if (text != null) ...[
-              SizedBox(width: 6),
-              Text(
-                text,
-                style: TextStyle(
-                  color: textPrimary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+      body: FadeTransition(
+        opacity: _fadeAnimation,
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              _buildTopSection(),
+              _buildTabContent(),
             ],
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildProfileSection() {
+  Widget _buildTopSection() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      color: Colors.white,
       child: Column(
         children: [
-          // Profile Image
+          // Header with search bar
+          Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 10,
+              left: 16,
+              right: 16,
+              bottom: 10,
+            ),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: textPrimary,
+                      size: 24,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 16),
+                        Icon(Icons.search, color: textSecondary, size: 20),
+                        SizedBox(width: 12),
+                        Text(
+                          'Rithi Mahesh Kumar B',
+                          style: TextStyle(
+                            color: textSecondary,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  child: Icon(
+                    Icons.settings,
+                    color: textPrimary,
+                    size: 24,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Cover and Profile Section
           Stack(
             children: [
+              // Cover Image
               Container(
+                height: 120,
+                width: double.infinity,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 20,
-                      offset: Offset(0, 8),
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(0),
+                    bottomRight: Radius.circular(0),
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    // Gradient overlay similar to LinkedIn
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF9CA3AF).withOpacity(0.8),
+                            Color(0xFFE5E7EB).withOpacity(0.3),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Camera icon
+                    Positioned(
+                      top: 12,
+                      right: 12,
+                      child: Container(
+                        padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Icon(
+                          Icons.camera_alt_outlined,
+                          color: textSecondary,
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                    // Edit icon (pen)
+                    Positioned(
+                      bottom: 12,
+                      right: 12,
+                      child: Container(
+                        padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.edit,
+                          color: textPrimary,
+                          size: 16,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                child: CircleAvatar(
-                  radius: 55,
-                  backgroundColor: Colors.white,
+              ),
+              // Profile Image positioned over cover
+              Positioned(
+                top: 50,
+                left: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 4),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 8,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: 40,
                     backgroundImage: NetworkImage(
                       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
                     ),
@@ -204,124 +249,103 @@ class _VetnetProfilePageState extends State<VetnetProfilePage>
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 4,
-                right: 4,
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: primaryColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryColor.withOpacity(0.3),
-                        blurRadius: 8,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Icon(Icons.camera_alt_rounded, color: Colors.white, size: 16),
-                ),
-              ),
             ],
           ),
-          SizedBox(height: 20),
-          // Name and Edit Button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Text(
-                  'Rithi Mahesh Kumar B',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: textPrimary,
-                    letterSpacing: -0.5,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(width: 8),
-              _buildIconButton(
-                icon: Icons.edit_rounded,
-                onTap: () {},
-              ),
-            ],
-          ),
-          SizedBox(height: 12),
-          // Verified Badge
+          // Profile Info Section
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: successColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: successColor.withOpacity(0.3)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+            padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.verified_rounded, color: successColor, size: 20),
-                SizedBox(width: 6),
+                // Name and Verification
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Rithi Mahesh Kumar B',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: textPrimary,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.verified,
+                      color: primaryColor,
+                      size: 20,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 2),
                 Text(
-                  'Verified Professional',
+                  'He/Him',
                   style: TextStyle(
-                    color: successColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                    color: textSecondary,
                   ),
                 ),
+                SizedBox(height: 8),
+                // Professional Title
+                Text(
+                  'Full Stack Developer | Specializing in Mobile Apps, Web Development & Cloud Solutions',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: textPrimary,
+                    height: 1.4,
+                  ),
+                ),
+                SizedBox(height: 12),
+                // Company/Institution
+                Text(
+                  'TechCorp Solutions',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: textPrimary,
+                  ),
+                ),
+                SizedBox(height: 4),
+                // Location
+                Text(
+                  'Tamil Nadu, India',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: textSecondary,
+                  ),
+                ),
+                SizedBox(height: 12),
+                // Connections
+                GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    '247 connections',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+
               ],
             ),
-          ),
-          SizedBox(height: 20),
-          // Stats Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildStatChip(Icons.location_on_rounded, 'Coimbatore', primaryColor),
-              SizedBox(width: 12),
-              _buildStatChip(Icons.work_rounded, '2+ Years', warningColor),
-              SizedBox(width: 12),
-              _buildStatChip(Icons.star_rounded, '4.9', successColor),
-            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildStatChip(IconData icon, String text, Color color) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.2)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 16),
-          SizedBox(width: 6),
-          Text(
-            text,
-            style: TextStyle(
-              color: color,
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildTabContent() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
+          // Resume Upload Section
+          _buildResumeUploadSection(),
+          SizedBox(height: 20),
           // Profile Completion
           _buildProfileCompletion(),
           SizedBox(height: 20),
@@ -331,6 +355,122 @@ class _VetnetProfilePageState extends State<VetnetProfilePage>
           // Tab Content
           if (currentTabIndex == 0) _buildProfileTab(),
           if (currentTabIndex == 1) _buildActivityTab(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResumeUploadSection() {
+    return _buildCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(Icons.description_rounded, color: Colors.white, size: 20),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  'Resume',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: textPrimary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.grey[50],
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Colors.grey[300]!,
+                style: BorderStyle.solid,
+              ),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: primaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Icon(
+                    Icons.cloud_upload_rounded,
+                    size: 32,
+                    color: primaryColor,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Upload your resume',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: textPrimary,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Share your resume to help recruiters find you',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 16),
+                GestureDetector(
+                  onTap: () {
+                    // Handle file upload
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.upload_file_rounded, color: Colors.white, size: 18),
+                        SizedBox(width: 8),
+                        Text(
+                          'Choose File',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 12),
+                Text(
+                  'Supported formats: PDF, DOC, DOCX (Max 5MB)',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: textLight,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -636,7 +776,7 @@ class _VetnetProfilePageState extends State<VetnetProfilePage>
           icon: Icons.cake_rounded,
           label: 'Date of Birth',
           value: 'June 29, 2000',
-          color: warningColor,
+          color: primaryColor,
           onTap: () {},
         ),
         SizedBox(height: 12),

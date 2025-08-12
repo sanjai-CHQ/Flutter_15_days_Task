@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../utils/custom_routes.dart';
-import '../pages/login_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -9,22 +7,19 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          UserAccountsDrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue[600],
-            ),
-            accountName: Text('John Doe'),
-            accountEmail: Text('john.doe@example.com'),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                'JD',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[600],
+          DrawerHeader(
+            decoration: BoxDecoration(color: Colors.blue),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text('S', style: TextStyle(color: Colors.blue)),
                 ),
-              ),
+                SizedBox(height: 10),
+                Text('Sanjai', style: TextStyle(color: Colors.white, fontSize: 18)),
+                Text('sanjai@gmail.com', style: TextStyle(color: Colors.white70)),
+              ],
             ),
           ),
           ListTile(
@@ -50,23 +45,10 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.shopping_bag),
-            title: Text('My Orders'),
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
             onTap: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Orders page coming soon!')),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Wishlist'),
-            onTap: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Wishlist page coming soon!')),
-              );
             },
           ),
           Divider(),
@@ -76,28 +58,17 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Settings page coming soon!')),
+                SnackBar(content: Text('Settings coming soon!')),
               );
             },
           ),
           ListTile(
             leading: Icon(Icons.help),
-            title: Text('Help & Support'),
+            title: Text('Help'),
             onTap: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Help page coming soon!')),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.logout, color: Colors.red),
-            title: Text('Logout', style: TextStyle(color: Colors.red)),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                FadePageRoute(page: LoginScreen()),
+                SnackBar(content: Text('Help coming soon!')),
               );
             },
           ),

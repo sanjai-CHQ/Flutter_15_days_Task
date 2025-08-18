@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/product_provider.dart';
+import '../models/product.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -26,15 +29,12 @@ class CategoriesScreen extends StatelessWidget {
   }
 }
 
-class ElectronicsTab extends StatelessWidget {
-  final List<Map<String, dynamic>> electronics = [
-    {'name': 'Phone', 'price': 299.99, 'image': '📱'},
-    {'name': 'Laptop', 'price': 899.99, 'image': '💻'},
-    {'name': 'Headphones', 'price': 99.99, 'image': '🎧'},
-  ];
-
+class ElectronicsTab extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final products = ref.watch(productsProvider);
+    final electronicsProducts = products.where((p) => p.category == 'Electronics').toList();
+
     return Padding(
       padding: EdgeInsets.all(16),
       child: GridView.builder(
@@ -42,10 +42,11 @@ class ElectronicsTab extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
+          childAspectRatio: 0.8,
         ),
-        itemCount: electronics.length,
+        itemCount: electronicsProducts.length,
         itemBuilder: (context, index) {
-          final product = electronics[index];
+          final product = electronicsProducts[index];
           return GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/product-detail', arguments: product);
@@ -54,10 +55,36 @@ class ElectronicsTab extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(product['image'], style: TextStyle(fontSize: 50)),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      'Electronics',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 8),
-                  Text(product['name'], style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text('\$${product['price']}', style: TextStyle(color: Colors.green)),
+                  Text(product.image, style: TextStyle(fontSize: 40)),
+                  SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      product.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Text(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: TextStyle(color: Colors.green),
+                  ),
                 ],
               ),
             ),
@@ -68,15 +95,12 @@ class ElectronicsTab extends StatelessWidget {
   }
 }
 
-class HomeTab extends StatelessWidget {
-  final List<Map<String, dynamic>> homeItems = [
-    {'name': 'Coffee Maker', 'price': 79.99, 'image': '☕'},
-    {'name': 'Lamp', 'price': 49.99, 'image': '💡'},
-    {'name': 'Clock', 'price': 29.99, 'image': '🕐'},
-  ];
-
+class HomeTab extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final products = ref.watch(productsProvider);
+    final homeProducts = products.where((p) => p.category == 'Home').toList();
+
     return Padding(
       padding: EdgeInsets.all(16),
       child: GridView.builder(
@@ -84,10 +108,11 @@ class HomeTab extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
+          childAspectRatio: 0.8,
         ),
-        itemCount: homeItems.length,
+        itemCount: homeProducts.length,
         itemBuilder: (context, index) {
-          final product = homeItems[index];
+          final product = homeProducts[index];
           return GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/product-detail', arguments: product);
@@ -96,10 +121,36 @@ class HomeTab extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(product['image'], style: TextStyle(fontSize: 50)),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      'Home',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 8),
-                  Text(product['name'], style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text('\$${product['price']}', style: TextStyle(color: Colors.green)),
+                  Text(product.image, style: TextStyle(fontSize: 40)),
+                  SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      product.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Text(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: TextStyle(color: Colors.green),
+                  ),
                 ],
               ),
             ),

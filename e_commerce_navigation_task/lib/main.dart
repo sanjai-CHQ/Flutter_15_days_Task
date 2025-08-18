@@ -1,18 +1,24 @@
-import 'package:e_commerce_navigation_task/pages/cart_screen.dart';
-import 'package:e_commerce_navigation_task/pages/checkout_screen.dart';
-import 'package:e_commerce_navigation_task/pages/main_navigation.dart';
-import 'package:e_commerce_navigation_task/pages/product_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'pages/main_navigation.dart';
+import 'pages/product_details_screen.dart';
+import 'pages/cart_screen.dart';
+import 'pages/checkout_screen.dart';
+import 'pages/admin_screen.dart';
 
 void main() {
-  runApp(ECommerceApp());
+  runApp(
+    ProviderScope(
+      child: ECommerceApp(),
+    ),
+  );
 }
 
 class ECommerceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'E-Commerce',
+      title: 'Shopping',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -22,6 +28,7 @@ class ECommerceApp extends StatelessWidget {
         '/product-detail': (context) => ProductDetailScreen(),
         '/cart': (context) => CartScreen(),
         '/checkout': (context) => CheckoutScreen(),
+        '/admin': (context) => AdminScreen(),
       },
     );
   }

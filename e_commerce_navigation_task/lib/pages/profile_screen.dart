@@ -18,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 50,
                   backgroundColor: Colors.blue,
-                  child: Text('S', style: TextStyle(fontSize: 36, color: Colors.white)),
+                  child: Text('SS', style: TextStyle(fontSize: 36, color: Colors.white)),
                 ),
                 SizedBox(height: 16),
                 Text('Sanjai', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
@@ -27,6 +27,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           
+          // Profile Menu
           Expanded(
             child: ListView(
               children: [

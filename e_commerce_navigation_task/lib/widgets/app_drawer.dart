@@ -14,11 +14,11 @@ class AppDrawer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.white,
-                  child: Text('S', style: TextStyle(color: Colors.blue)),
+                  child: Text('JD', style: TextStyle(color: Colors.blue)),
                 ),
                 SizedBox(height: 10),
-                Text('Sanjai', style: TextStyle(color: Colors.white, fontSize: 18)),
-                Text('sanjai@gmail.com', style: TextStyle(color: Colors.white70)),
+                Text('John Doe', style: TextStyle(color: Colors.white, fontSize: 18)),
+                Text('john.doe@example.com', style: TextStyle(color: Colors.white70)),
               ],
             ),
           ),
@@ -49,6 +49,16 @@ class AppDrawer extends StatelessWidget {
             title: Text('Profile'),
             onTap: () {
               Navigator.pop(context);
+            },
+          ),
+          Divider(),
+          // Admin Access
+          ListTile(
+            leading: Icon(Icons.admin_panel_settings, color: Colors.orange),
+            title: Text('Admin Panel', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/admin');
             },
           ),
           Divider(),
